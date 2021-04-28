@@ -57,7 +57,6 @@ kombu
 SpeechRecognition
 plyer
 comtypes
-nltk
 pipwin
 pycaw
 moviepy
