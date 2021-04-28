@@ -1,0 +1,84 @@
+{% extends "layout.html"%}
+{% block content %}
+<div class="page-header">
+  <h3 class="page-title">Dashboard</h3><hr>
+</div>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+<div class="page-header">
+  <h3 class="page-title" style="font-family: georgia;"><u>LIP READING TUTORIAL</u></h3><hr>
+</div>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', 5],['Medium', 6],['Hard', 5]
+        ]);
+        var options = {'title':'Breakup by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', {{e}}],['Medium', {{m}}],['Hard', {{h}}], ['Unsolved', 16-{{e}}-{{m}}-{{h}}]
+        ]);
+        var options = {'title':'Correct Answer by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Accepted', {{e}}+{{m}}+{{h}}],['Wrong Answer',{{w}}],['No Attempt', 16-{{e}}-{{m}}-{{h}}-{{w}}]
+        ]);
+        var options = {'title':'Progress Tracker', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <div id="piechart" style="float: left"></div>
+    <div id="piechart1" style="float: right;"></div>
+    <div id="piechart2" style="margin-left:36%"></div>
+<br>
+<br>
+<div class="page-header">
+  <h3 class="page-title" style="font-family: georgia;"><u>SIGN LANGUAGE TUTORIAL</u></h3><hr>
+</div>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', 5],['Medium', 5],['Hard', 6]
+        ]);
+        var options = {'title':'Breakup by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart3'));
+        chart.draw(data, options);
+        }
+    </script> 
+
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', {{e1}}],['Medium', {{m1}}],['Hard', {{h1}}], ['Unsolved', 16-{{e1}}-{{m1}}-{{h1}}]
+        ]);
+        var options = {'title':'Correct Answer by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart4'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Accepted', {{e1}}+{{m1}}+{{h1}}],['Wrong Answer',{{w1}}],['No Attempt', 16-{{e1}}-{{m1}}-{{h1}}-{{w1}}]
+        ]);
+        var options = {'title':'Progress Tracker', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart5'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <div id="piechart3" style="float: left"></div>
+    <div id="piechart4" style="float: right;"></div>
+    <div id="piechart5" style="margin-left:36%"></div>
+{% endblock content%}
+
+  

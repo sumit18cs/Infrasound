@@ -1,0 +1,90 @@
+{% extends "layout.html"%}
+{% block content %}
+ <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> 
+<div class="page-header">
+  <h3 class="page-title"><center>LIP READING TUTORIAL</center></h3><hr>
+</div>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', 5],['Medium', 6],['Hard', 5]
+        ]);
+        var options = {'title':'Breakup by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Easy', {{e}}],['Medium', {{m}}],['Hard', {{h}}], ['Unsolved', 16-{{e}}-{{m}}-{{h}}]
+        ]);
+        var options = {'title':'Correct Answer by Difficulty', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart1'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart']});
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {var data = google.visualization.arrayToDataTable([['Task', 'Hours per Day'],['Accepted', {{e}}+{{m}}+{{h}}],['Wrong Answer',{{w}}],['No Attempt', 16-{{e}}-{{m}}-{{h}}-{{w}}]
+        ]);
+        var options = {'title':'Progress Tracker', 'width':350, 'height':250};
+        var chart = new google.visualization.PieChart(document.getElementById('piechart2'));
+        chart.draw(data, options);
+        }
+    </script> 
+    <div id="piechart" style="float: left"></div>
+    <div id="piechart1" style="float: right;"></div>
+    <div id="piechart2" style="margin-left:36%"></div>
+    <table style="width:100%; text-align: center;" border="2px" cellpadding="15">
+        <tr>
+            <th>TUTORIAL LINK</th>
+            <th>STATUS</th>
+            <th>SUCCESSFUL SUBMISSION</th>
+            <th>DIFFICULTY</th>
+        </tr>
+        
+        {% for skill in current_user.skills %}
+        <tr>
+            
+            <td>
+                {% if skill.done == 1 %}
+                        <a href="{{ url_for('lipreading', video_id=skill.video_id) }}">
+                            <button type="button" class="btn btn-info" >Tutorial Link</button>
+                        </a>
+                {% else %}
+                        <a href="{{ url_for('lipreading', video_id=skill.video_id) }}">
+                            <button type="button" class="btn btn-info" >Tutorial Link</button>
+                        </a>
+                {% endif %}
+            </td>
+            <td>
+                {% if skill.done == 1 %}
+                    <button type="button" class="btn btn-success" >Accepted</button>
+                {% elif skill.done == 2 %}
+                    <button type="button" class="btn btn-danger" >Wrong Answer</button>
+                {% else %}
+                    <button type="button" class="btn btn-dark" >No Attempt</button>
+                {% endif %}
+            </td>
+            <td>
+                {% print(ans[skill.video_id]) %} / {{ total }}
+            </td>
+            <td>
+                {% if skill.difficulty == 1 %}
+                    <button type="button" class="btn btn-success" >Easy</button>
+                {% elif skill.difficulty == 2 %}
+                    <button type="button" class="btn btn-warning" >Medium</button>
+                {% else %}
+                    <button type="button" class="btn btn-danger" >Hard</button>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    
+{% endblock content%}
+
+  

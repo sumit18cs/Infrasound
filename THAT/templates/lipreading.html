@@ -1,0 +1,87 @@
+{% extends "layout.html"%}
+{% block content %}
+<script>
+    function myFunction() {
+      alert(" Number of letter in the required word is " + {{ hint }} );
+    }
+</script>
+
+<div class="page-header">
+  <h3 class="page-title">Lip Reading</h3><hr>
+</div>
+    <p>
+        <h4> Instruction :</h4><br>
+        <h5>    Play the video where a single word is repeated thrice and then enter the word in below text box in lower case letter without any spaces or special characters.
+        </h5>
+        <br>
+    </p>
+    <video width="640" height="480" controls style="float: left; margin-right: 10px;">
+        {% if video_id == 1 %}
+            <source src="../static/video/lip/1_BALL.mp4" type="video/mp4">
+        {% elif video_id == 2 %}
+            <source src="../static/video/lip/2_DAD.mp4" type="video/mp4">
+        {% elif video_id == 3 %}
+            <source src="../static/video/lip/3_BLUE.mp4" type="video/mp4">
+        {% elif video_id == 4 %}
+            <source src="../static/video/lip/4_THE.mp4" type="video/mp4">
+        {% elif video_id == 5 %}
+            <source src="../static/video/lip/5_THREE.mp4" type="video/mp4">
+        {% elif video_id == 6 %}
+            <source src="../static/video/lip/6_BUS.mp4" type="video/mp4">
+        {% elif video_id == 7 %}
+            <source src="../static/video/lip/7_WILL.mp4" type="video/mp4">
+        {% elif video_id == 8 %}
+            <source src="../static/video/lip/8_MOM.mp4" type="video/mp4">
+        {% elif video_id == 9 %}
+            <source src="../static/video/lip/9_FAST.mp4" type="video/mp4">
+        {% elif video_id == 10 %}
+            <source src="../static/video/lip/10_FIVE.mp4" type="video/mp4">
+        {% elif video_id == 11 %}
+            <source src="../static/video/lip/11_LAUGH.mp4" type="video/mp4">
+        {% elif video_id == 12 %}
+            <source src="../static/video/lip/12_TEN.mp4" type="video/mp4">
+        {% elif video_id == 13 %}
+            <source src="../static/video/lip/13_ME.mp4" type="video/mp4">
+        {% elif video_id == 14 %}
+            <source src="../static/video/lip/14_TWO.mp4" type="video/mp4">
+        {% elif video_id == 15 %}
+            <source src="../static/video/lip/15_YOU.mp4" type="video/mp4">
+        {% elif video_id == 16 %}
+            <source src="../static/video/lip/16_PLEASE.mp4" type="video/mp4">
+        {% endif %}
+    </video> 
+    
+
+    <form method="POST" action="" style="margin-top: 160px">
+        <h2 style="text-align: center;">
+    Enter your answer here
+</h2>
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="form-group mb-2 mt-2">
+                
+                {% if form.search.errors %}
+                    {{ form.search(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.search.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.search(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>
+        <div class="form-group mb-2" style="text-align: center;">
+            {{ form.submit(class="btn btn-outline-success") }}
+        </div>
+        <br>
+<div style="text-align: center;">
+    <button onclick="myFunction()" class="btn btn-info">Get a Hint</button>
+</div>
+    
+
+
+{% endblock content%}
+
+  
