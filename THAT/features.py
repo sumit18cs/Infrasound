@@ -6,7 +6,6 @@ import speech_recognition as sr
 from plyer import notification 
 from comtypes import CLSCTX_ALL
 from ctypes import cast, POINTER
-from nltk.tokenize import sent_tokenize, word_tokenize 
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 #--------------------------------------------------------------------------------------------------------------------- 
