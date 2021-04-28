@@ -1,7 +1,7 @@
 appdirs==1.4.3
 asn1crypto==0.24.0
 bcrypt==3.2.0
-beautifulsoup4==4.8.2
+beautifulsoup4
 blinker==1.4
 certifi==2019.11.28
 cffi==1.14.3
