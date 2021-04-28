@@ -2,7 +2,7 @@ from flask import render_template, url_for, flash, redirect,request,abort,jsonif
 import requests
 import json
 import imaplib
-from THAT import application,db,bcrypt,mail #using bcrypt to has the passwords in user database
+from THAT import app,db,bcrypt,mail #using bcrypt to has the passwords in user database
 from THAT.models import User, Lecture, Skill, Sign
 from THAT.forms import RegistrationForm, LoginForm,LectureForm,SearchForm,MessageForm,UpdateAccountForm,FeedbackForm,ReadingForm
 from flask_login import login_user,current_user,logout_user,login_required
@@ -35,14 +35,14 @@ import moviepy.editor as mp
 
 #--------------------------------------------------------------------------------------------
 #everything here that begins with @ is a decorator
-@application.route("/")
-@application.route("/home", methods=['GET', 'POST'])
+@app.route("/")
+@app.route("/home", methods=['GET', 'POST'])
 
-@application.route("/home")
+@app.route("/home")
 def home():
     return render_template('home.html',db=db,User=User,Lecture=Lecture)
 
-@application.route("/login", methods=['GET', 'POST'])
+@app.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard'))  
@@ -60,7 +60,7 @@ def login():
     return render_template('login.html', title='Login', form=form)
 
 
-@application.route("/dashboard", methods=['GET', 'POST'])
+@app.route("/dashboard", methods=['GET', 'POST'])
 @login_required
 def dashboard():
     skills = Skill.query.filter_by(author=current_user)
@@ -96,12 +96,12 @@ def dashboard():
             w1=w1+1
     return render_template('dashboard.html', title='Dashboard',e=e,m=m,h=h,w=w,e1=e1,m1=m1,h1=h1,w1=w1)
 
-@application.route("/about", methods=['GET', 'POST'])
+@app.route("/about", methods=['GET', 'POST'])
 @login_required
 def about():
     return render_template('about.html', title='About')
     
-@application.route("/tutorial", methods=['GET', 'POST'])
+@app.route("/tutorial", methods=['GET', 'POST'])
 @login_required
 def tutorial():
     skills = Skill.query.filter_by(author=current_user)
@@ -133,7 +133,7 @@ def tutorial():
     return render_template('tutorial.html', title='Lip Reading',e=e,m=m,h=h,w=w,total=total,ans=ans)
 
 
-@application.route("/lipreading/<int:video_id>", methods=['GET', 'POST'])
+@app.route("/lipreading/<int:video_id>", methods=['GET', 'POST'])
 @login_required
 def lipreading(video_id):
     print(video_id)
@@ -165,7 +165,7 @@ def lipreading(video_id):
         return redirect(url_for('lipreading',video_id=video_id)) 
     return render_template('lipreading.html', title='Lip Reading',form=form,video_id=video_id,hint=hint)
 
-@application.route("/sign_tutorial", methods=['GET', 'POST'])
+@app.route("/sign_tutorial", methods=['GET', 'POST'])
 @login_required
 def sign_tutorial():
     signs = Sign.query.filter_by(author=current_user)
@@ -197,7 +197,7 @@ def sign_tutorial():
     return render_template('sign_tutorial.html', title='Sign Reading',e=e,m=m,h=h,w=w,total=total,ans=ans)
 
 
-@application.route("/signreading/<int:video_id>", methods=['GET', 'POST'])
+@app.route("/signreading/<int:video_id>", methods=['GET', 'POST'])
 @login_required
 def signreading(video_id):
     print(video_id)
@@ -230,7 +230,7 @@ def signreading(video_id):
     return render_template('signreading.html', title='Sign Reading',form=form,video_id=video_id,hint=hint)
 
 
-@application.route("/register", methods=['GET', 'POST'])
+@app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('dashboard')) #redirects user to dashboard if already logged in; function name is passed in url_for
@@ -291,18 +291,18 @@ def register():
 
     return render_template('register.html', title='Register', image_file=image_file,form=form)
 
-@application.route("/logout")
+@app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@application.route("/account")
+@app.route("/account")
 @login_required
 def account():
     image_file=url_for('static',filename='images/user.png')
     return render_template('account.html',title='Account',image_file=image_file)
 
-@application.route("/account/update",methods=['GET', 'POST'])
+@app.route("/account/update",methods=['GET', 'POST'])
 @login_required
 def update_account():
     form=UpdateAccountForm()
@@ -319,7 +319,7 @@ def update_account():
     image_file=url_for('static',filename='profile_pics/' + current_user.image_file)
     return render_template('update_account.html',title='Update Account',image_file=image_file,form=form,legend='Update credentials')
 
-@application.route("/account/delete",methods=['GET', 'POST'])
+@app.route("/account/delete",methods=['GET', 'POST'])
 @login_required
 def delete_account():
     user=User.query.filter_by(id=current_user.id).first()
@@ -332,7 +332,7 @@ def delete_account():
     flash('Account deleted','success')
     return redirect(url_for('register'))
 
-@application.route("/contact_us",methods=['GET', 'POST'])
+@app.route("/contact_us",methods=['GET', 'POST'])
 def contact_us():
     form=MessageForm()
     if current_user.is_authenticated:
@@ -345,12 +345,12 @@ def contact_us():
         flash('Your message has been sent.','success')
     return render_template("contact_us.html",form=form)
 
-@application.route("/speechAsisstance",methods=['GET', 'POST'])
+@app.route("/speechAsisstance",methods=['GET', 'POST'])
 def speechAsisstance():
     return render_template("speechAsisstance.html") 
 
 
-@application.route("/speechAsisstance_RoS")
+@app.route("/speechAsisstance_RoS")
 def speechAsisstance_RoS():
     print("Starting Recording\n")
     average_RoS, words_in_speech, text = getRoS()
@@ -364,11 +364,11 @@ def speechAsisstance_RoS():
     ret_val = jsonify(message1 =message1, message2= message2 ,message3=message3,message4=message4)
     return ret_val
 
-@application.route("/transcripts",methods=['GET', 'POST'])
+@app.route("/transcripts",methods=['GET', 'POST'])
 def transcripts():
     return render_template("transcripts.html") 
 
-@application.route("/getranscripts",methods=['GET', 'POST'])
+@app.route("/getranscripts",methods=['GET', 'POST'])
 def getranscripts():
     #path = path of current_lecture
     path = "C:/Users/Dell/Desktop/t4sne/Codes/THAT/static/video/video_transcript.mp4"
@@ -377,14 +377,14 @@ def getranscripts():
     ret_val = jsonify(message = transcript)
     return ret_val
 
-@application.route("/video_player/ <int:lecture_id>")
+@app.route("/video_player/ <int:lecture_id>")
 @login_required
 def video_player(lecture_id):
     lecture=Lecture.query.get_or_404(lecture_id) #get_or_404 returns the requested page if it exists else it returns a 404 error
     return render_template('video_player.html',title=lecture.title,lecture=lecture)
 
     
-@application.route("/video_transcripts",methods=['GET', 'POST'])
+@app.route("/video_transcripts",methods=['GET', 'POST'])
 @login_required
 def video_transcripts():
     return render_template('video_transcripts.html')
