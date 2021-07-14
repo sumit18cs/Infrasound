@@ -23,11 +23,6 @@ On the other hand, “**Speech Assistance**” features help us know how fast or
 
 While watching videos a person with a hearing disability often can’t understand what the person is trying to convey because lip-reading at that pace is almost next to impossible. The feature “**Video Transcript**” generates auto-subtitles and can help them better understand the context of the video.
 
-[**Workflow Diagram**](/User_Flow_Diagram.jpg)
-
-[**Screenshots**](/Screenshots)
-
-[**Demo Video**](/INFRASOUND.mp4)
 
 ## Softwares and Libraries Used:
  - Python 
